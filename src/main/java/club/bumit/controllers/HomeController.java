@@ -29,8 +29,10 @@ public class HomeController extends BaseController {
 
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private SocialAccountRepository socialAccountRepository;
+
     @Autowired
     SocialService socialService;
 

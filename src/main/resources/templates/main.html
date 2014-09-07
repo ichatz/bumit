@@ -90,7 +90,9 @@
                 <img th:src="@{/icons/sign-in.png}" style="height:38px;"/>
             </a>
         </div>
-
+        <div class="navbar-form pull-right" style="paddint-top: 2px;" th:if="${!notlogged}">
+            <h2>Logged in</h2>
+        </div>
     </div>
 </div>
 
