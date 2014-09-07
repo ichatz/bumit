@@ -9,7 +9,7 @@
 
         <item th:each="tweet:${items}">
             <title th:text="${tweet.name} + ' on ' + ${tweet.createdOn}">Text</title>
-            <description th:text="${tweet.text} + '<BR>https://twitter.com/' + ${tweet.name} + '/statuses/' + ${tweet.id}">Name</description>
+            <description th:text="${tweet.text} + ' https://twitter.com/' + ${tweet.handle} + '/statuses/' + ${tweet.id}">Name</description>
             <georss:point th:text="${tweet.latitude} + ' ' + ${tweet.longitude}">37.774929 -122.419416</georss:point>
         </item>
 
