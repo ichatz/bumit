@@ -1,6 +1,7 @@
 package club.bumit.repository;
 
 import club.bumit.model.SocialAccount;
+import club.bumit.model.User;
 import org.apache.log4j.Logger;
 import org.springframework.social.connect.*;
 import org.springframework.util.LinkedMultiValueMap;
@@ -97,6 +98,10 @@ public final class SocialAccountConnectionRepository implements ConnectionReposi
         socialAccount.setSecret(connectionData.getSecret());
         socialAccount.setRefreshToken(connectionData.getRefreshToken());
         socialAccount.setExpireTime(connectionData.getExpireTime());
+
+        User user = userRepository.findById(userId);
+        user.setHandle(socialAccount.getDisplayName());
+        userRepository.save(user);
 
         return socialAccount;
     }

@@ -2,6 +2,7 @@ package club.bumit;
 
 import club.bumit.service.SocialService;
 import club.bumit.util.BumitAuthenticationProvider;
+import com.simplify.payments.PaymentsApi;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;

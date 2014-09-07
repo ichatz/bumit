@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>BitIt Club</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" media="screen"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap-datetimepicker.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/bootswatch.min.css}"/>
+    <link rel="stylesheet" href="http://js.arcgis.com/3.10/js/esri/css/esri.css"/>
+    <script src="http://js.arcgis.com/3.10/"></script>
+    <script>
+    </script>
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+
+        <div class="navbar-header pull-left">
+            <form class="navbar-form" action="https://twitter.com/search">
+                <input name="q" type="text" class="form-control" placeholder="Search" value="#bumit "/>
+            </form>
+        </div>
+
+        <div class="navbar-header" style="width: 50%; padding-left: 20%">
+            <a class="brand" href="home.html" th:href="@{/}"><img class="img-responsive"
+                                                                  src="../static/icons/bumit-logo-1.png"
+                                                                  th:src="@{/icons/bumit-logo-1.png}"
+                                                                  alt="BumIt Club"
+                                                                  style="height: 50px; margin-top: 5px;"> </img></a>
+        </div>
+
+        <div class="navbar-form pull-right" style="paddint-top: 2px;">
+            <a class="brand" href="home.html" th:href="@{/login}">
+                <img th:src="@{/icons/sign-in.png}" style="height:38px;"/>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="container" style="padding-top: 75px;">
+
+    <div class="row">
+
+        <h4>Looking for a <span th:text="${#strings.replace(status.text,'#bumit4','')}"></span></h4>
+
+
+        <form role="form" method="post" action="/bumit4">
+            <input type='hidden' class="form-control" name="statusId" th:value="${status.id}"/>
+
+            <div class="form-group">
+                <label for="datetimepicker1">Time</label>
+
+                <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" name="time"/>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                <script>
+                    setTimeout(function () {
+                        $('#datetimepicker1').datetimepicker();
+                    }, 1000)</script>
+            </div>
+            <div class="form-group">
+                <label for="duration">Duration</label>
+                <input type="text" class="form-control" id="duration" name="duration" placeholder="2 hours"/>
+            </div>
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="text" class="form-control" id="price" name="price" placeholder="$5"/>
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+    <hr/>
+
+    <footer>
+        <p>&copy; <a href="https://twitter.com/bumitclub">BumIt Club</a> for <a
+                href="http://techcrunch.com/events/disrupt-sf-hackathon-2014/">TechCrunch Disrupt SF 2014 Hackathon</a>
+        </p>
+    </footer>
+</div>
+<!-- /container -->
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/moment.min.js}"></script>
+<script th:src="@{/js/bootstrap-datetimepicker.js}"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script th:src="@{/js/ie10-viewport-bug-workaround.js}"></script>
+</body>
+</html>

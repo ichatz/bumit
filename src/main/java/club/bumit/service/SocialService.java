@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.twitter.api.*;
 import org.springframework.social.twitter.api.impl.TwitterTemplate;
 import org.springframework.stereotype.Service;
+import twitter4j.Status;
 
 import javax.annotation.PostConstruct;
 
@@ -116,5 +117,28 @@ public class SocialService {
         tweetData.inReplyToStatus(statusId);
         Tweet status = twitter.timelineOperations().updateStatus(tweetData);
         LOGGER.info(status);
+    }
+
+    public void sendReplyBumit(User user, Status status, String time, String duration, String price) {
+        final SocialAccount userSocialAccount = socialAccountRepository.findByUserId(user.getId()).iterator().next();
+        final TwitterTemplate twitter = new TwitterTemplate(
+                SocialConfigApiKeys.TWITTER_API_KEY, SocialConfigApiKeys.TWITTER_API_SECRET,
+                userSocialAccount.getAccessToken(), userSocialAccount.getSecret());
+
+        TweetData tweetData = new TweetData("@" + status.getUser().getScreenName() + " Lend it to me on " + time + " (" + duration + ") for " + price + "? http://bumit.sensorflare.com/bumit/" + status.getId() + "/" + twitter.userOperations().getProfileId());
+        tweetData.inReplyToStatus(status.getId());
+        Tweet status1 = twitter.timelineOperations().updateStatus(tweetData);
+        LOGGER.info(status1);
+    }
+
+    public void sendReplyBumit4(User user, Status status, String time, String duration, String price) {
+        final SocialAccount userSocialAccount = socialAccountRepository.findByUserId(user.getId()).iterator().next();
+        final TwitterTemplate twitter = new TwitterTemplate(
+                SocialConfigApiKeys.TWITTER_API_KEY, SocialConfigApiKeys.TWITTER_API_SECRET,
+                userSocialAccount.getAccessToken(), userSocialAccount.getSecret());
+        TweetData tweetData = new TweetData("@" + status.getUser().getScreenName() + " Borrow it from me on " + time + " (" + duration + ") for " + price + "? http://bumit.sensorflare.com/bumit4/" + status.getId() + "/" + twitter.userOperations().getProfileId());
+        tweetData.inReplyToStatus(status.getId());
+        Tweet status1 = twitter.timelineOperations().updateStatus(tweetData);
+        LOGGER.info(status1);
     }
 }
