@@ -42,7 +42,7 @@ public class StreamListener implements StatusListener {
                 if (user != null) {
                     System.out.println("by " + user);
                 } else {
-                    socialService.sendReply(status.getUser().getScreenName(), "@" + status.getUser().getScreenName() + " Hello " + status.getUser().getName() + ", come and join Bumit to easily lend and borrow everyday items. http://bumit.sensorflare.com", status.getId());
+                    socialService.sendReply(status.getUser().getScreenName(), "@" + status.getUser().getScreenName() + " Hello " + status.getUser().getName() + ", come and join Bumit to easily lend and borrow everyday items. http://bumit.sensorflare.com/login", status.getId());
                 }
                 if (item.getText().contains("#bumit4")) {
                     socialService.makeReplyBumit4(item, status.getUser().getScreenName());
