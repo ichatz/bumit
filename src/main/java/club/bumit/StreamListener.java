@@ -84,6 +84,7 @@ public class StreamListener implements StatusListener {
 //        System.out.println(imagePos + ": " + status.getText());
 //        if (imagePos > 0) {
         final BumitItem item = new BumitItem();
+        item.setId(status.getId());
         item.setText(status.getText());
         item.setName(status.getUser().getName());
         item.setHandle(status.getUser().getScreenName());
