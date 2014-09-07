@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>bumit club</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="http://js.arcgis.com/3.10/js/esri/css/esri.css"/>
+    <script src="http://js.arcgis.com/3.10/"></script>
+</head>
+<body>
+<h4>These are the items available:</h4>
+
+<div th:each="tweet:${tweets}">
+
+    <p><span th:text="${tweet.text}">Text</span></p>
+    &mdash;<span th:text="${tweet.user.name}">Name</span> (@<span th:text="${tweet.user.screenName}">Handle</span>)
+
+</div>
+
+<div th:each="point:${locations}">
+    <p><span th:text="${point.latitude}">Lat</span> /
+        <span th:text="${point.longitude}">Long</span></p>
+</div>
+<script>
+    require(["esri/map", "dojo/domReady!"], function(Map) {
+        map = new Map("mapDiv", {
+            center: [-56.049, 38.485],
+            zoom: 3,
+            basemap: "streets"
+        });
+    });
+</script>
+
+
+<div id="mapDiv"></div>
+</body>
+</html>
