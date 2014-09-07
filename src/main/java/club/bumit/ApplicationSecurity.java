@@ -1,5 +1,7 @@
 package club.bumit;
 
+import club.bumit.util.BumitAuthenticationProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -27,6 +29,9 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 public class ApplicationSecurity
         extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    BumitAuthenticationProvider bumitAuthenticationProvider;
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -35,7 +40,7 @@ public class ApplicationSecurity
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(neoAuthenticationProvider);
+        auth.authenticationProvider(bumitAuthenticationProvider);
     }
 
     @Bean
