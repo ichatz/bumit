@@ -16,8 +16,8 @@ public class User {
 
     private String name;
     private String username;
-
     private String password;
+    private String handle;
 
     public String getId() {
         return id;
@@ -51,4 +51,11 @@ public class User {
         this.password = password;
     }
 
+    public String getHandle() {
+        return handle;
+    }
+
+    public void setHandle(String handle) {
+        this.handle = handle;
+    }
 }
