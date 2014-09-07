@@ -66,21 +66,20 @@ public class ItemController {
                     System.out.println(status.getUser().getLocation());
                 }
 
+                if (status.getUser().getScreenName().toLowerCase().equals("myrinafrancis")) {
+                    item.setLatitude(37.759020);
+                    item.setLongitude(-122.421334);
+
+                } else if (status.getUser().getScreenName().toLowerCase().equals("sensorflare")) {
+                    item.setLatitude(37.755132);
+                    item.setLongitude(-122.423772);
+
+                } else if (status.getUser().getScreenName().toLowerCase().equals("axiodim")) {
+                    item.setLatitude(37.751206);
+                    item.setLongitude(-122.418355);
+                }
+
                 if (item.getLongitude() == 0) {
-                    if (status.getUser().getScreenName().toLowerCase().equals("myrinafrancis")) {
-                        item.setLatitude(37.759020);
-                        item.setLongitude(-122.421334);
-
-                    } else if (status.getUser().getScreenName().toLowerCase().equals("sensorflare")) {
-                        item.setLatitude(37.755132);
-                        item.setLongitude(-122.423772);
-
-                    } else if (status.getUser().getScreenName().toLowerCase().equals("axiodim")) {
-                        item.setLatitude(37.751206);
-                        item.setLongitude(-122.418355);
-                    }
-
-
                     item.setLatitude(37.774929);
                     item.setLongitude(-122.419416);
                 }

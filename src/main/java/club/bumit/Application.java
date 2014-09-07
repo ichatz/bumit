@@ -32,7 +32,7 @@ public class Application {
         Query query = new Query("#bumit4");
         QueryResult result = twitter.search(query);
         for (Status status : result.getTweets()) {
-            System.out.println("@" + status.getUser().getScreenName() + "[" + status.getCreatedAt() + "] :" + status.getText());
+            System.out.println("@" + status.getUser().getScreenName() + "[" + status.getId() + "/" + status.getCreatedAt() + "] :" + status.getText());
         }
 
         /*TwitterStream twitterStream = TwitterSingleton.getInstance().getTwitterStreamFactory().getInstance();
