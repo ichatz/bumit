@@ -116,7 +116,7 @@ public class ItemController {
         return "items";
     }
 
-    @RequestMapping("/main")
+    @RequestMapping("/")
     public String main(final Model model) {
         model.addAttribute("items", getItems("#bumit", true));
         model.addAttribute("searchers", getItems("#bumit4", false));

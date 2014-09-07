@@ -20,7 +20,7 @@ import java.util.Map;
  * @author ichatz@gmail.com
  */
 @Controller
-@RequestMapping("/")
+@RequestMapping("/home")
 public class HomeController extends BaseController {
     /**
      * <p>Custom Logger instance.</p>
