@@ -71,8 +71,8 @@
     <div class="container">
 
         <div class="navbar-header pull-left">
-            <form class="navbar-form">
-                <input type="text" class="search-query" placeholder="Search"/>
+            <form class="navbar-form" action="https://twitter.com/search">
+                <input name="q" type="text" class="form-control" placeholder="Search" value="#bumit "/>
             </form>
         </div>
 
@@ -81,12 +81,12 @@
                                                                   src="../static/icons/bumit-logo-1.png"
                                                                   th:src="@{/icons/bumit-logo-1.png}"
                                                                   alt="BumIt Club"
-                                                                  style="height: 45px;"> </img></a>
+                                                                  style="height: 50px; margin-top: 5px;"> </img></a>
         </div>
 
-        <div class="navbar-form pull-right">
+        <div class="navbar-form pull-right" style="paddint-top: 2px;">
             <a class="brand" href="home.html" th:href="@{/login}">
-                <img th:src="@{/icons/sign-in.png}"/>
+                <img th:src="@{/icons/sign-in.png}" style="height:38px;"/>
             </a>
         </div>
 
