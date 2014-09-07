@@ -1,19 +1,16 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Bumit Club</title>
+    <title>bumit club</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-Welcome to bumit.
+Welcome <span th:text="${twitterProfile.name}">Some User</span> to bumit.
 
-<h3>Connect to Twitter</h3>
+<h4>These are your friends:</h4>
 
-<form action="/connect/twitter" method="POST">
-    <div class="formInfo">
-        <p>You aren't connected to Twitter yet. Click the button to connect this application with your Twitter account.</p>
-    </div>
-    <p><button type="submit">Connect to Twitter</button></p>
-</form>
+<ul>
+    <li th:each="friend:${friends}" th:text="${friend.name}">Friend</li>
+</ul>
 </body>
 </html>
