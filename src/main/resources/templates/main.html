@@ -85,13 +85,13 @@
         </div>
 
 
-        <div class="navbar-form pull-right" style="paddint-top: 2px;" th:if="${notlogged}">
+        <div class="navbar-form pull-right" style="padding-top: 2px;" th:if="${notlogged}">
             <a class="brand" href="home.html" th:href="@{/login}">
                 <img th:src="@{/icons/sign-in.png}" style="height:38px;"/>
             </a>
         </div>
-        <div class="navbar-form pull-right" style="paddint-top: 2px;" th:if="${!notlogged}">
-            <h2>Logged in</h2>
+        <div class="navbar-form pull-right" th:if="${!notlogged}">
+            <h2 style="margin-top: 0px;" >Logged in</h2>
         </div>
     </div>
 </div>
