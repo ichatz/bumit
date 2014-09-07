@@ -33,6 +33,7 @@ public class Application {
         QueryResult result = twitter.search(query);
         for (Status status : result.getTweets()) {
             System.out.println("@" + status.getUser().getScreenName() + "[" + status.getId() + "/" + status.getCreatedAt() + "] :" + status.getText());
+            System.out.println("https://twitter.com/" + status.getUser().getScreenName() + "/statuses/" + status.getId());
         }
 
         /*TwitterStream twitterStream = TwitterSingleton.getInstance().getTwitterStreamFactory().getInstance();

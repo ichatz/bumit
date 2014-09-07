@@ -36,6 +36,7 @@ public class ItemController {
                 }
 
                 final BumitItem item = new BumitItem();
+                item.setId(status.getId());
                 item.setName(status.getUser().getName());
                 item.setHandle(status.getUser().getScreenName());
                 item.setCreatedOn(status.getCreatedAt());

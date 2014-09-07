@@ -9,6 +9,8 @@ import java.util.Date;
 public class BumitItem
         implements Serializable {
 
+    private long id;
+
     private String imageUrl;
 
     private String text;
@@ -22,6 +24,14 @@ public class BumitItem
     private double longitude;
 
     private Date createdOn;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getImageUrl() {
         return imageUrl;

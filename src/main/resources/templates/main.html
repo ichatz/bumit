@@ -6,6 +6,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}" media="screen"/>
     <link rel="stylesheet" th:href="@{/css/bootswatch.min.css}"/>
+    <link rel="stylesheet" href="http://js.arcgis.com/3.10/js/esri/css/esri.css"/>
+    <script src="http://js.arcgis.com/3.10/"></script>
+    <script>
+        var map;
+        require([
+            "esri/map", "esri/layers/GeoRSSLayer", "esri/InfoTemplate",
+            "dojo/parser", "dojo/_base/array", "dojo/dom-style",
+            "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dojo/domReady!"
+        ], function(
+                Map, GeoRSSLayer, InfoTemplate,
+                parser, arrayUtils, domStyle
+                ) {
+            map = new esri.Map("map",{
+                basemap: "oceans",
+                center: [-122.419416, 37.774929],
+                zoom: 13
+            });
+
+            // create layout dijits
+            parser.parse();
+
+            var georssUrl = "http://bumit.sensorflare.com/items.rss";
+            var georss = new GeoRSSLayer(georssUrl);
+            georss.on("load", function() {
+                domStyle.set("loading", "display", "none");
+                // create an info template
+                var template = new InfoTemplate("${name}", "${description}");
+                // set the info template for the feature layers that make up the GeoRSS layer
+                // the GeoRSS layer contains one feature layer for each geometry type
+                var layers = georss.getFeatureLayers();
+                arrayUtils.forEach(layers, function(l) {
+                    l.setInfoTemplate(template);
+                });
+                /*
+                 georss.setSelectionSymbol(
+                 new Symbol.PictureMarkerSymbol({"angle":0,"xoffset":0,"yoffset":0,"type":"esriPMS","url":"http://static.arcgis.com/images/Symbols/Basic/esriCrimeMarker_86.png","imageData":"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","contentType":"image/png","width":24,"height":24})
+                 );*/
+            });
+
+            map.addLayer(georss);
+
+
+            var georssUrl4 = "http://bumit.sensorflare.com/items4.rss";
+            var georss4 = new GeoRSSLayer(georssUrl4);
+            georss4.on("load", function() {
+                domStyle.set("loading", "display", "none");
+                // create an info template
+                var template = new InfoTemplate("${name}", "${description}");
+                // set the info template for the feature layers that make up the GeoRSS layer
+                // the GeoRSS layer contains one feature layer for each geometry type
+                var layers = georss4.getFeatureLayers();
+                arrayUtils.forEach(layers, function(l) {
+                    l.setInfoTemplate(template);
+                });
+            });
+            map.addLayer(georss4);
+        });
+    </script>
 </head>
 <body>
 
@@ -40,30 +98,36 @@
 
     <div class="row">
         <div class="col-md-4">
-            <h2>Latest BumIts</h2>
+            <div class="list-group">
+                <a class="list-group-item" href="#"><img th:src="@{/icons/latest.png}"/></a>
 
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris
-                condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis
-                euismod. Donec sed odio dui. </p>
+                <a class="twitter-timeline"  href="https://twitter.com/hashtag/bumit" data-widget-id="508595437100490752">#bumit Tweets</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div>
         </div>
 
         <div class="col-md-8">
-            <h2>Heading</h2>
+            <div class="list-group">
+                <a class="list-group-item" href="#"><img th:src="@{/icons/universe.png}"/></a>
 
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula
-                porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut
-                fermentum massa justo sit amet risus.</p>
+                <div id="map"
+                     data-dojo-type="dijit/layout/ContentPane"
+                     data-dojo-props="region:'center'"
+                     style="clear:both; height: 450px; width: 100%;">
+                    <div id="meta">
+                        <span id="loading"><img src="http://dl.dropbox.com/u/2654618/loading_black.gif"/></span>
+                    </div>
+                </div>
 
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div>
         </div>
     </div>
 
     <hr/>
 
     <footer>
-        <p>&copy; BumIt Club for Disrupt SF 2014 Hackathon</p>
+        <p>&copy; <a href="https://twitter.com/bumitclub">BumIt Club</a> for <a href="http://techcrunch.com/events/disrupt-sf-hackathon-2014/">TechCrunch Disrupt SF 2014 Hackathon</a></p>
     </footer>
 </div>
 <!-- /container -->
