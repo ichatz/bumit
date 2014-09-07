@@ -8,7 +8,7 @@
     <channel><title>bumit item RSS</title>
 
         <item th:each="tweet:${items}">
-            <title th:text="${tweet.name}">Text</title>
+            <title th:text="${tweet.name} + ' on ' + ${tweet.createdOn}">Text</title>
             <description th:text="${tweet.text}">Name</description>
             <georss:point th:text="${tweet.latitude} + ' ' + ${tweet.longitude}">37.774929 -122.419416</georss:point>
         </item>

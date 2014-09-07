@@ -1,6 +1,7 @@
 package club.bumit.util;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Storing location of tweets.
@@ -19,6 +20,8 @@ public class BumitItem
     private double latitude;
 
     private double longitude;
+
+    private Date createdOn;
 
     public String getImageUrl() {
         return imageUrl;
@@ -66,5 +69,13 @@ public class BumitItem
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
     }
 }

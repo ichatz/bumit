@@ -32,6 +32,7 @@ public class ItemController {
                 final BumitItem item = new BumitItem();
                 item.setName(status.getUser().getName());
                 item.setHandle(status.getUser().getScreenName());
+                item.setCreatedOn(status.getCreatedAt());
 
                 if (imagePos > 0) {
                     item.setText(status.getText().substring(0, imagePos - 1));
