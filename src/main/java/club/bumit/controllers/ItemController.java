@@ -39,7 +39,7 @@ public class ItemController
             final QueryResult result = twitter.search(query);
             for (final Status status : result.getTweets()) {
                 final int imagePos = status.getText().indexOf("http://t.co");
-                System.out.println(imagePos + ": " + status.getText());
+                //System.out.println(imagePos + ": " + status.getText());
 
                 // skip tweets without images
                 if (onlyImages && imagePos < 0) {
@@ -71,11 +71,11 @@ public class ItemController
                         item.setLatitude(posBox[0][0].getLatitude());
                         item.setLongitude(posBox[0][0].getLongitude());
                     } else {
-                        System.out.println(status.getPlace().getName());
+                        //System.out.println(status.getPlace().getName());
                     }
 
                 } else if (status.getUser().getLocation() != null) {
-                    System.out.println(status.getUser().getLocation());
+                    //System.out.println(status.getUser().getLocation());
                 }
 
                 if (status.getUser().getScreenName().toLowerCase().equals("myrinafrancis")) {
@@ -96,8 +96,8 @@ public class ItemController
                     item.setLongitude(-122.419416);
                 }
 
-                System.out.println(item.getLatitude() + " " + item.getLongitude());
-                System.out.println("---");
+//                System.out.println(item.getLatitude() + " " + item.getLongitude());
+//                System.out.println("---");
                 bumitItems.add(item);
             }
 
