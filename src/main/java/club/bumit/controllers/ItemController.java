@@ -1,7 +1,11 @@
 package club.bumit.controllers;
 
 import club.bumit.model.BumitItem;
+import club.bumit.model.SocialAccount;
+import club.bumit.repository.SocialAccountRepository;
+import club.bumit.service.SocialService;
 import club.bumit.util.TwitterSingleton;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +20,14 @@ import java.util.List;
  * @author ichatz@gmail.com
  */
 @Controller
-public class ItemController {
+public class ItemController
+        extends BaseController {
+
+    @Autowired
+    private SocialAccountRepository socialAccountRepository;
+
+    @Autowired
+    SocialService socialService;
 
     private List<BumitItem> getItems(final String queryStr, final boolean onlyImages) {
         // The factory instance is re-useable and thread safe.
@@ -118,6 +129,17 @@ public class ItemController {
 
     @RequestMapping("/")
     public String main(final Model model) {
+        if (!isUnknownUser(getUser())) {
+            List<SocialAccount> accounts = socialAccountRepository.findByUserId(getUser().getId());
+            if (accounts.isEmpty()) {
+                return "redirect:/connect/twitter";
+
+            } else {
+                model.addAttribute("twitterProfile", socialService.getProfile(accounts.iterator().next()));
+                model.addAttribute("friends", socialService.listFriends(accounts.iterator().next()));
+            }
+        }
+
         model.addAttribute("items", getItems("#bumit", true));
         model.addAttribute("searchers", getItems("#bumit4", false));
         return "main";
