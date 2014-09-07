@@ -1,44 +1,58 @@
 package club.bumit.controllers;
 
-import org.springframework.social.connect.ConnectionRepository;
-import org.springframework.social.twitter.api.CursoredList;
-import org.springframework.social.twitter.api.Twitter;
-import org.springframework.social.twitter.api.TwitterProfile;
+import club.bumit.model.SocialAccount;
+import club.bumit.repository.SocialAccountRepository;
+import club.bumit.repository.UserRepository;
+import club.bumit.service.SocialService;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.inject.Inject;
+import javax.annotation.PostConstruct;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Home page controller.
+ *
  * @author ichatz@gmail.com
  */
 @Controller
 @RequestMapping("/")
-public class HomeController {
+public class HomeController extends BaseController {
+    /**
+     * <p>Custom Logger instance.</p>
+     */
+    private static final Logger LOGGER = Logger.getLogger(HomeController.class);
 
-    private Twitter twitter;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private SocialAccountRepository socialAccountRepository;
+    @Autowired
+    SocialService socialService;
 
-    private ConnectionRepository connectionRepository;
-
-    @Inject
-    public HomeController(final Twitter twitter, final ConnectionRepository connectionRepository) {
-        this.twitter = twitter;
-        this.connectionRepository = connectionRepository;
+    @PostConstruct
+    public void init() {
     }
 
-    @RequestMapping(method=RequestMethod.GET)
-    public String home(final Model model) {
-        if (connectionRepository.findPrimaryConnection(Twitter.class) == null) {
-            return "redirect:/connect/twitter";
-        }
+    @RequestMapping(method = RequestMethod.GET)
+    public String home(final Map<String, Object> model) {
+        if (isUnknownUser(getUser())) {
 
-        model.addAttribute(twitter.userOperations().getUserProfile());
-        final CursoredList<TwitterProfile> friends = twitter.friendOperations().getFriends();
-        model.addAttribute("friends", friends);
+        } else {
+            List<SocialAccount> accounts = socialAccountRepository.findByUserId(getUser().getId());
+            if (accounts.isEmpty()) {
+                return "redirect:/connect/twitter";
+            } else {
+                model.put("twitterProfile", socialService.getProfile(accounts.iterator().next()));
+                model.put("friends", socialService.listFriends(accounts.iterator().next()));
+            }
+        }
         return "home";
+
     }
 
 }

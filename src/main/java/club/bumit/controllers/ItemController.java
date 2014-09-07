@@ -1,6 +1,6 @@
 package club.bumit.controllers;
 
-import club.bumit.util.BumitItem;
+import club.bumit.model.BumitItem;
 import club.bumit.util.TwitterSingleton;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -113,6 +113,13 @@ public class ItemController {
         model.addAttribute("items", getItems("#bumit", true));
         model.addAttribute("searchers", getItems("#bumit4", false));
         return "items";
+    }
+
+    @RequestMapping("/main")
+    public String main(final Model model) {
+        model.addAttribute("items", getItems("#bumit", true));
+        model.addAttribute("searchers", getItems("#bumit4", false));
+        return "main";
     }
 
 }

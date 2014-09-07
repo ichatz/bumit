@@ -1,9 +1,8 @@
 package club.bumit.controllers;
 
 import club.bumit.model.User;
-import club.bumit.repository.UserRepository;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,22 +18,25 @@ import java.util.List;
  * @author ichatz@gmail.com
  */
 @Controller
-public class UserController {
+public class UserController extends BaseController {
     /**
      * <p>Custom Logger instance.</p>
      */
     private static final Logger LOGGER = Logger.getLogger(UserController.class);
+    private BCryptPasswordEncoder passwordEncoder;
 
-    @Autowired
-    private UserRepository userRepository;
 
     @PostConstruct
     public void init() {
+        passwordEncoder = new BCryptPasswordEncoder();
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String home(final Model model) {
-        return "login";
+        if (isUnknownUser(getUser())) {
+            return "login";
+        }
+        return "redirect:/";
     }
 
 

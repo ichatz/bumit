@@ -1,4 +1,4 @@
-package club.bumit.util;
+package club.bumit.model;
 
 import java.io.Serializable;
 import java.util.Date;

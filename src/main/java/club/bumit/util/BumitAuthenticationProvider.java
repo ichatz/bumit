@@ -53,7 +53,7 @@ public class BumitAuthenticationProvider
         final String password = String.valueOf(auth.getCredentials());
 
         // 1. Use the username to load the data for the user, including authorities and password.
-        final User user = userRepository.findByName(username);
+        User user = userRepository.findByUsername(username);
 
         // Check if we are connected to Neo4J
         if (userRepository == null) {
@@ -62,7 +62,10 @@ public class BumitAuthenticationProvider
 
         // Check that user exists in our database
         if (user == null) {
-            throw new BadCredentialsException("Bad Credentials");
+            user = new User();
+            user.setUsername(username);
+            user.setPassword(passwordEncoder.encode(password));
+            user = userRepository.save(user);
         }
 
         // 2. Check the passwords match.

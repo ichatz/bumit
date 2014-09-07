@@ -1,0 +1,39 @@
+.iconmelon,
+.im {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: block;
+  fill: #525151;
+  margin: 0 auto;
+}
+.iconmelon:after,
+.im:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+/* override styles */
+.iconmelon:after,
+.im:after {
+    position: relative;
+    width: 100%;
+    height: 3px;
+    display: inline-block;
+    background: #eff0f3;
+    margin-top: 50px;
+}
+.iconmelon {
+    margin: 0 auto;
+    margin-bottom: 100px;
+}
+.steps-inner .iconmelon:after,
+.steps-inner .im:after {
+    margin-top: 50px;
+}
+.steps-inner .iconmelon {
+    margin-bottom: 100px;
+}
