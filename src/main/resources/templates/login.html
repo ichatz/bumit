@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="utf-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <meta name="apple-mobile-web-app-capable" content="yes"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"></meta>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"></meta>
+    <meta name="description" content="A cloud platform that simplifies your life while interacting with smart
+        devices around us like thermostats, plugs and activity trackers"></meta>
+
+    <title>Sign In</title>
+
+    <link rel="shortcut icon" th:href="@{img/favicon.png}"></link>
+
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.3.0.3.css}" href="../static/css/bootstrap.3.0.3.css"></link>
+</head>
+
+<body onload="document.f.username.focus();">
+
+<section id="firstSect" class="header-10-sub v-center bg-sensorflare sign-up">
+    <div class="background">
+        &nbsp;
+    </div>
+    <div>
+        <div class="container">
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+
+            <div class="col-md-4" style="text-align: center">
+                <div class="form-wrapper">
+                    <form name="form" action="/login" method="POST" class="form-signin">
+
+                        <p th:if="${param.logout}" class="alert alert-info" role="alert">You have been logged out.</p>
+
+                        <p th:if="${param.error}" class="alert alert-danger" role="alert">Username or password is
+                            incorrect. <br/> Please try again.</p>
+
+                        <input type="text" id="email" name="username" value="" class="form-control input-lg"
+                               placeholder="Your Email" required="on" autofocus="on"></input>
+                        <input type="password" class="form-control" name="password" placeholder="Password"
+                               required="on"></input>
+                        <button type="submit" id="login" value="Login" class="btn btn-primary btn-block btn-contrast">
+                            Log in
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+            <br/>
+            <br/>
+        </div>
+    </div>
+</section>
+
+<!-- Javascript -->
+<script src="../static/js/jquery-1.11.0.min.js" th:src="@{/js/jquery-1.11.0.min.js}"></script>
+<script src="../static/js/bootstrap.3.1.1.min.js" th:src="@{/js/bootstrap.3.1.1.min.js}"></script>
+
+</body>
+</html>
+
