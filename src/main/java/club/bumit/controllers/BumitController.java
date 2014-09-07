@@ -3,6 +3,9 @@ package club.bumit.controllers;
 import club.bumit.model.BumitItem;
 import club.bumit.service.SocialService;
 import club.bumit.util.TwitterSingleton;
+import com.simplify.payments.PaymentsApi;
+import com.simplify.payments.PaymentsMap;
+import com.simplify.payments.domain.Payment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,10 +63,11 @@ public class BumitController extends BaseController {
 
     @RequestMapping(value = "/bumit", method = RequestMethod.POST)
     public String bumitPost(final Map<String, Object> model,
+                            @RequestParam final String simplifyToken,
                             @RequestParam("statusId") Long statusId,
                             @RequestParam("time") String time,
                             @RequestParam("duration") String duration,
-                            @RequestParam("price") String price) {
+                            @RequestParam("price") String price) throws Exception {
         try {
             Status status = twitter.showStatus(statusId);
             if (status == null) { //
@@ -75,6 +79,25 @@ public class BumitController extends BaseController {
             socialService.sendReplyBumit(getUser(), status, time, duration, price);
             parseStatus(status);
             model.put("status", status);
+
+            PaymentsApi.PRIVATE_KEY = "h6nIxIuGUx0LH1GtETYSn1+vWhnf01p5E7Oywitxfql5YFFQL0ODSXAOkNtXTToq";
+            PaymentsApi.PUBLIC_KEY = "sbpb_OGY5OGZiYjEtMjMyZC00MGVlLWI0OGQtZThiNjM1OGMwYmZk";
+
+            System.out.println(simplifyToken);
+
+            final Payment payment = Payment.create(new PaymentsMap()
+                    .set("currency", "USD")
+                    .set("token", simplifyToken) // returned by JavaScript call
+                    .set("amount", 1000) // In cents e.g. $10.00
+                    .set("description", "BumIt Club"));
+            if ("APPROVED".equals(payment.get("paymentStatus"))) {
+                System.out.println("Payment approved");
+            }
+
+            model.put("paymentStatus", payment.get("paymentStatus"));
+            return "payment-success";
+
+
         } catch (TwitterException e) {
             System.err.print("Failed to search tweets: " + e.getMessage());
             // e.printStackTrace();

@@ -125,7 +125,8 @@ public class SocialService {
                 SocialConfigApiKeys.TWITTER_API_KEY, SocialConfigApiKeys.TWITTER_API_SECRET,
                 userSocialAccount.getAccessToken(), userSocialAccount.getSecret());
 
-        TweetData tweetData = new TweetData("@" + status.getUser().getScreenName() + " Lend it to me on " + time + " (" + duration + ") for " + price + "? http://bumit.sensorflare.com/bumit/" + status.getId() + "/" + twitter.userOperations().getProfileId());
+        //http://bumit.sensorflare.com/bumit/" + status.getId() + "/" + twitter.userOperations().getProfileId()
+        TweetData tweetData = new TweetData("@" + status.getUser().getScreenName() + " Lend it to me on " + time + " (" + duration + ") for " + price);
         tweetData.inReplyToStatus(status.getId());
         Tweet status1 = twitter.timelineOperations().updateStatus(tweetData);
         LOGGER.info(status1);
@@ -136,7 +137,8 @@ public class SocialService {
         final TwitterTemplate twitter = new TwitterTemplate(
                 SocialConfigApiKeys.TWITTER_API_KEY, SocialConfigApiKeys.TWITTER_API_SECRET,
                 userSocialAccount.getAccessToken(), userSocialAccount.getSecret());
-        TweetData tweetData = new TweetData("@" + status.getUser().getScreenName() + " Borrow it from me on " + time + " (" + duration + ") for " + price + "? http://bumit.sensorflare.com/bumit4/" + status.getId() + "/" + twitter.userOperations().getProfileId());
+        // "? http://bumit.sensorflare.com/bumit4/" + status.getId() + "/" + twitter.userOperations().getProfileId()
+        TweetData tweetData = new TweetData("@" + status.getUser().getScreenName() + " Borrow it from me on " + time + " (" + duration + ") for " + price);
         tweetData.inReplyToStatus(status.getId());
         Tweet status1 = twitter.timelineOperations().updateStatus(tweetData);
         LOGGER.info(status1);
