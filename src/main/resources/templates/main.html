@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>BitIt Club</title>
+    <title>BumIt Club</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}" media="screen"/>
@@ -84,7 +84,8 @@
                                                                   style="height: 50px; margin-top: 5px;"> </img></a>
         </div>
 
-        <div class="navbar-form pull-right" style="paddint-top: 2px;">
+
+        <div class="navbar-form pull-right" style="paddint-top: 2px;" th:if="${notlogged}">
             <a class="brand" href="home.html" th:href="@{/login}">
                 <img th:src="@{/icons/sign-in.png}" style="height:38px;"/>
             </a>

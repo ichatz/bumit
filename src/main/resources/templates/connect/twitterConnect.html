@@ -1,15 +1,25 @@
 <html>
 <head>
-    <title>bumit club</title>
+    <title>Bumit club</title>
 </head>
-<body>
-<h3>Connect to Twitter</h3>
+<body style="background-color: #f6f6f6">
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" style="height: 140px;">&nbsp;</div>
+        <div class="col-md-3">&nbsp;</div>
+        <div class="col-md-6">
+            <form action="/connect/twitter" method="POST" class="form-signin">
+                <h3 class="form-signin-heading">Connect to Twitter</h3>
 
-<form action="/connect/twitter" method="POST">
-    <div class="formInfo">
-        <p>You aren't connected to Twitter yet. Click the button to connect this application with your Twitter account.</p>
+                <p>You aren't connected to Twitter yet. Click the button to connect this application with your
+                    Twitter
+                    account.</p>
+
+                <button type="submit" id="login" value="Login" class="btn btn-primary btn-block btn-contrast" style="background-color: #30D1BE;">Connect to Twitter</button>
+            </form>
+        </div>
     </div>
-    <p><button type="submit">Connect to Twitter</button></p>
-</form>
+</div>
+</div>
 </body>
 </html>

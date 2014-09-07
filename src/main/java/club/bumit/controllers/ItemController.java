@@ -140,6 +140,7 @@ public class ItemController
             }
         }
 
+        model.addAttribute("notlogged", isUnknownUser(getUser()));
         model.addAttribute("items", getItems("#bumit", true));
         model.addAttribute("searchers", getItems("#bumit4", false));
         return "main";
