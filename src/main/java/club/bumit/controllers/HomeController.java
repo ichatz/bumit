@@ -1,7 +1,9 @@
 package club.bumit.controllers;
 
 import org.springframework.social.connect.ConnectionRepository;
+import org.springframework.social.twitter.api.CursoredList;
 import org.springframework.social.twitter.api.Twitter;
+import org.springframework.social.twitter.api.TwitterProfile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +29,13 @@ public class HomeController {
 
     @RequestMapping("/")
     public String home(final Model model) {
-        //model.addAttribute("name", name);
+        if (connectionRepository.findPrimaryConnection(Twitter.class) == null) {
+            return "redirect:/connect/twitter";
+        }
+
+        model.addAttribute(twitter.userOperations().getUserProfile());
+        final CursoredList<TwitterProfile> friends = twitter.friendOperations().getFriends();
+        model.addAttribute("friends", friends);
         return "home";
     }
 
