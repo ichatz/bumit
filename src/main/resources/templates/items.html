@@ -24,7 +24,7 @@
             // create layout dijits
             parser.parse();
 
-            var georssUrl = "http://dl.dropbox.com/u/2654618/data-mixed.xml";
+            var georssUrl = "http://bumit.sensorflare.com/items.rss";
             // other examples of GeoRSS feeds:
             // var georssUrl = "http://geocommons.com/overlays/188692.atom"; // U.S. Breweries in 2009 http://geocommons.com/overlays/188692
             // var georssUrl = "http://geocommons.com/overlays/116926.atom"; // S.F. and East Bay Breweries http://geocommons.com/overlays/116926
@@ -47,10 +47,12 @@
 <body>
 <h4>These are the items available:</h4>
 
-<div th:each="tweet:${bumitItems}">
+<div th:each="tweet:${items}">
 
     <p><span th:text="${tweet.text}">Text</span></p>
     &mdash;<span th:text="${tweet.name}">Name</span> (@<span th:text="${tweet.handle}">Handle</span>)
+
+    <img th:src="${tweet.imageUrl}"/>
 
     <p><span th:text="${tweet.latitude}">Lat</span> /
         <span th:text="${tweet.longitude}">Long</span></p>
