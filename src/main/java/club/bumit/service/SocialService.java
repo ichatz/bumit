@@ -86,61 +86,84 @@ public class SocialService {
     }
 
     public void makeReplyBumit(final BumitItem item, final String screenName) {
-        final TwitterTemplate twitter = new TwitterTemplate(
-                SocialConfigApiKeys.TWITTER_API_KEY, SocialConfigApiKeys.TWITTER_API_SECRET,
-                bumitSocialAccount.getAccessToken(), bumitSocialAccount.getSecret());
-        LOGGER.info(bumitSocialAccount);
-        TweetData tweetData = new TweetData("Looking for a " + item.getText().replaceAll("#bumit", "") + "? borrow one from @" + screenName + " http://bumit.sensorflare.com/bumit/" + item.getId());
-        tweetData.inReplyToStatus(item.getId());
-        Tweet status = twitter.timelineOperations().updateStatus(tweetData);
-        LOGGER.info(status);
+        try {
+            final TwitterTemplate twitter = new TwitterTemplate(
+                    SocialConfigApiKeys.TWITTER_API_KEY, SocialConfigApiKeys.TWITTER_API_SECRET,
+                    bumitSocialAccount.getAccessToken(), bumitSocialAccount.getSecret());
+            LOGGER.info(bumitSocialAccount);
+            TweetData tweetData = new TweetData("Looking for a " + item.getText().replaceAll("#bumit", "") + "? borrow one from @" + screenName + " http://bumit.sensorflare.com/bumit/" + item.getId());
+            tweetData.inReplyToStatus(item.getId());
+            Tweet status = twitter.timelineOperations().updateStatus(tweetData);
+            LOGGER.info(status);
+        } catch (Exception ex) {
+            LOGGER.error(ex);
+        }
     }
 
     public void makeReplyBumit4(final BumitItem item, final String screenName) {
-        final TwitterTemplate twitter = new TwitterTemplate(
-                SocialConfigApiKeys.TWITTER_API_KEY, SocialConfigApiKeys.TWITTER_API_SECRET,
-                bumitSocialAccount.getAccessToken(), bumitSocialAccount.getSecret());
-        LOGGER.info(bumitSocialAccount);
-        TweetData tweetData = new TweetData("Offering a " + item.getText().replaceAll("#bumit4", "") + "? lend one to @" + screenName + " http://bumit.sensorflare.com/bumit4/" + item.getId());
-        tweetData.inReplyToStatus(item.getId());
-        Tweet status = twitter.timelineOperations().updateStatus(tweetData);
-        LOGGER.info(status);
+        try {
+            final TwitterTemplate twitter = new TwitterTemplate(
+                    SocialConfigApiKeys.TWITTER_API_KEY, SocialConfigApiKeys.TWITTER_API_SECRET,
+                    bumitSocialAccount.getAccessToken(), bumitSocialAccount.getSecret());
+            LOGGER.info(bumitSocialAccount);
+            TweetData tweetData = new TweetData("Offering a " + item.getText().replaceAll("#bumit4", "") + "? lend one to @" + screenName + " http://bumit.sensorflare.com/bumit4/" + item.getId());
+            tweetData.inReplyToStatus(item.getId());
+            Tweet status = twitter.timelineOperations().updateStatus(tweetData);
+            LOGGER.info(status);
+        } catch (Exception ex) {
+            LOGGER.error(ex);
+        }
     }
 
     public void sendReply(final String screenName, String replyContents, Long statusId) {
         final TwitterTemplate twitter = new TwitterTemplate(
                 SocialConfigApiKeys.TWITTER_API_KEY, SocialConfigApiKeys.TWITTER_API_SECRET,
                 bumitSocialAccount.getAccessToken(), bumitSocialAccount.getSecret());
-        LOGGER.info(bumitSocialAccount);
-        twitter.friendOperations().follow(screenName);
-        TweetData tweetData = new TweetData(replyContents);
-        tweetData.inReplyToStatus(statusId);
-        Tweet status = twitter.timelineOperations().updateStatus(tweetData);
-        LOGGER.info(status);
+        try {
+            LOGGER.info(bumitSocialAccount);
+            twitter.friendOperations().follow(screenName);
+            final TweetData tweetData = new TweetData(replyContents);
+            tweetData.inReplyToStatus(statusId);
+            final Tweet status = twitter.timelineOperations().updateStatus(tweetData);
+            LOGGER.info(status);
+        } catch (Exception ex) {
+            LOGGER.error(ex);
+        }
     }
 
     public void sendReplyBumit(User user, Status status, String time, String duration, String price) {
         final SocialAccount userSocialAccount = socialAccountRepository.findByUserId(user.getId()).iterator().next();
-        final TwitterTemplate twitter = new TwitterTemplate(
-                SocialConfigApiKeys.TWITTER_API_KEY, SocialConfigApiKeys.TWITTER_API_SECRET,
-                userSocialAccount.getAccessToken(), userSocialAccount.getSecret());
+        try {
+            final TwitterTemplate twitter = new TwitterTemplate(
+                    SocialConfigApiKeys.TWITTER_API_KEY, SocialConfigApiKeys.TWITTER_API_SECRET,
+                    userSocialAccount.getAccessToken(), userSocialAccount.getSecret());
 
-        //http://bumit.sensorflare.com/bumit/" + status.getId() + "/" + twitter.userOperations().getProfileId()
-        TweetData tweetData = new TweetData("@" + status.getUser().getScreenName() + " Lend it to me on " + time + " (" + duration + ") for " + price);
-        tweetData.inReplyToStatus(status.getId());
-        Tweet status1 = twitter.timelineOperations().updateStatus(tweetData);
-        LOGGER.info(status1);
+            //http://bumit.sensorflare.com/bumit/" + status.getId() + "/" + twitter.userOperations().getProfileId()
+            TweetData tweetData = new TweetData("@" + status.getUser().getScreenName() + " Lend it to me on " + time + " (" + duration + ") for " + price);
+            tweetData.inReplyToStatus(status.getId());
+            Tweet status1 = twitter.timelineOperations().updateStatus(tweetData);
+            LOGGER.info(status1);
+        } catch (Exception ex) {
+            LOGGER.error(ex);
+        }
+
     }
 
     public void sendReplyBumit4(User user, Status status, String time, String duration, String price) {
-        final SocialAccount userSocialAccount = socialAccountRepository.findByUserId(user.getId()).iterator().next();
-        final TwitterTemplate twitter = new TwitterTemplate(
-                SocialConfigApiKeys.TWITTER_API_KEY, SocialConfigApiKeys.TWITTER_API_SECRET,
-                userSocialAccount.getAccessToken(), userSocialAccount.getSecret());
-        // "? http://bumit.sensorflare.com/bumit4/" + status.getId() + "/" + twitter.userOperations().getProfileId()
-        TweetData tweetData = new TweetData("@" + status.getUser().getScreenName() + " Borrow it from me on " + time + " (" + duration + ") for " + price);
-        tweetData.inReplyToStatus(status.getId());
-        Tweet status1 = twitter.timelineOperations().updateStatus(tweetData);
-        LOGGER.info(status1);
+        try {
+            final SocialAccount userSocialAccount = socialAccountRepository.findByUserId(user.getId()).iterator().next();
+
+            final TwitterTemplate twitter = new TwitterTemplate(
+                    SocialConfigApiKeys.TWITTER_API_KEY, SocialConfigApiKeys.TWITTER_API_SECRET,
+                    userSocialAccount.getAccessToken(), userSocialAccount.getSecret());
+            // "? http://bumit.sensorflare.com/bumit4/" + status.getId() + "/" + twitter.userOperations().getProfileId()
+            TweetData tweetData = new TweetData("@" + status.getUser().getScreenName() + " Borrow it from me on " + time + " (" + duration + ") for " + price);
+            tweetData.inReplyToStatus(status.getId());
+            Tweet status1 = twitter.timelineOperations().updateStatus(tweetData);
+            LOGGER.info(status1);
+        } catch (Exception ex) {
+            LOGGER.error(ex);
+        }
+
     }
 }
