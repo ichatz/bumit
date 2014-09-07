@@ -18,7 +18,7 @@ import java.util.List;
 @Controller
 public class ItemController {
 
-    private List<BumitItem> getItems(final String queryStr) {
+    private List<BumitItem> getItems(final String queryStr, final boolean onlyImages) {
         // The factory instance is re-useable and thread safe.
         final Twitter twitter = TwitterSingleton.getInstance().getTwitterFactory().getInstance();
         final Query query = new Query(queryStr);
@@ -29,6 +29,12 @@ public class ItemController {
             for (final Status status : result.getTweets()) {
                 final int imagePos = status.getText().indexOf("http://t.co");
                 System.out.println(imagePos + ": " + status.getText());
+
+                // skip tweets without images
+                if (onlyImages && imagePos < 0) {
+                    continue;
+                }
+
                 final BumitItem item = new BumitItem();
                 item.setName(status.getUser().getName());
                 item.setHandle(status.getUser().getScreenName());
@@ -55,11 +61,26 @@ public class ItemController {
                     } else {
                         System.out.println(status.getPlace().getName());
                     }
+
                 } else if (status.getUser().getLocation() != null) {
                     System.out.println(status.getUser().getLocation());
                 }
 
                 if (item.getLongitude() == 0) {
+                    if (status.getUser().getScreenName().toLowerCase().equals("myrinafrancis")) {
+                        item.setLatitude(37.759020);
+                        item.setLongitude(-122.421334);
+
+                    } else if (status.getUser().getScreenName().toLowerCase().equals("sensorflare")) {
+                        item.setLatitude(37.755132);
+                        item.setLongitude(-122.423772);
+
+                    } else if (status.getUser().getScreenName().toLowerCase().equals("axiodim")) {
+                        item.setLatitude(37.751206);
+                        item.setLongitude(-122.418355);
+                    }
+
+
                     item.setLatitude(37.774929);
                     item.setLongitude(-122.419416);
                 }
@@ -78,19 +99,20 @@ public class ItemController {
 
     @RequestMapping("/items.rss")
     public String rss(final Model model) {
-        model.addAttribute("items", getItems("#bumit"));
+        model.addAttribute("items", getItems("#bumit", true));
         return "itemsrss";
     }
 
     @RequestMapping("/items4.rss")
     public String rss4(final Model model) {
-        model.addAttribute("items", getItems("#bumit4"));
+        model.addAttribute("items", getItems("#bumit4", false));
         return "itemsrss";
     }
 
     @RequestMapping("/items")
     public String home(final Model model) {
-        model.addAttribute("items", getItems("#bumit"));
+        model.addAttribute("items", getItems("#bumit", true));
+        model.addAttribute("searchers", getItems("#bumit4", false));
         return "items";
     }
 

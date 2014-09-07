@@ -29,7 +29,7 @@ public class Application {
 
         // The factory instance is re-useable and thread safe.
         final Twitter twitter = TwitterSingleton.getInstance().getTwitterFactory().getInstance();
-        Query query = new Query("#bumit");
+        Query query = new Query("#bumit4");
         QueryResult result = twitter.search(query);
         for (Status status : result.getTweets()) {
             System.out.println("@" + status.getUser().getScreenName() + "[" + status.getCreatedAt() + "] :" + status.getText());
